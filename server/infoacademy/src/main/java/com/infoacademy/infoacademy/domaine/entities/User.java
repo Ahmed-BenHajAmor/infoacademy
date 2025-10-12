@@ -1,10 +1,11 @@
-package com.infoacademy.infoacademy.domain.entities;
+package com.infoacademy.infoacademy.domaine.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
-import com.infoacademy.infoacademy.domain.entities.enums.Role;
+import com.infoacademy.infoacademy.domaine.entities.enums.Role;
 
 @Entity
 @Table(name = "users")
@@ -15,8 +16,8 @@ import com.infoacademy.infoacademy.domain.entities.enums.Role;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idUser;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID idUser;
 
     @Column(nullable = false, unique = true, length = 50)
     private String username;
@@ -28,12 +29,16 @@ public class User {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false)
     private Role role;
 
     @Column(nullable = false)
-    private boolean isActive = true;
+    private LocalDateTime dateCreated;
 
-    private LocalDateTime dateCreated = LocalDateTime.now();
-    private LocalDateTime lastLogin;
+    @PrePersist
+    public void onCreate(){
+        dateCreated = LocalDateTime.now();
+    }
+
+
 }

@@ -1,9 +1,11 @@
-package com.infoacademy.infoacademy.domain.entities;
+package com.infoacademy.infoacademy.domaine.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "offers")
@@ -28,7 +30,13 @@ public class Offer {
     private LocalDateTime endDate;
     private boolean isActive;
 
-    @ManyToOne
-    @JoinColumn(name = "course_id")
-    private Course course;
+
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "offers")
+    private Set<Student> students = new HashSet<>();
+
+
+
+    @OneToMany(mappedBy = "offer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Group> groups = new HashSet<>();
 }
