@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "group")
+@Table(name = "student_groups")
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
