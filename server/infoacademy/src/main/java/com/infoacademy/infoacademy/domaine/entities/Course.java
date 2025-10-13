@@ -74,6 +74,4 @@ public class Course {
             inverseJoinColumns = @JoinColumn(name = "id_homework", nullable = false)
     )
     private Set<Homework> homeworks = new HashSet<>();
-
-
 }

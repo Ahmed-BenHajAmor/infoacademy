@@ -70,7 +70,13 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+	
+   <dependency>
+     <groupId>edu.kit.kastel.sdq</groupId>
+     <artifactId>artemis4j</artifactId>
+     <version>7.4.2</version>
+   </dependency>
+ </dependencies>
 
 	<build>
 		<plugins>
