@@ -17,7 +17,7 @@ public class Video {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-        private UUID id;
+    private UUID id;
 
     private String title;
 

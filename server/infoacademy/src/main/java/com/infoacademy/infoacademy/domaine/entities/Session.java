@@ -5,6 +5,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import com.infoacademy.infoacademy.domaine.entities.enums.SessionStatus;
 
@@ -17,8 +18,8 @@ import com.infoacademy.infoacademy.domaine.entities.enums.SessionStatus;
 public class Session {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idSession;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String title;
 
