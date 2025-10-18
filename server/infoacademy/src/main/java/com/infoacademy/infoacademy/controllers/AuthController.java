@@ -1,7 +1,6 @@
 package com.infoacademy.infoacademy.controllers;
 
 import com.infoacademy.infoacademy.domaine.dtos.auth.*;
-import com.infoacademy.infoacademy.domaine.dtos.auth.StudentAuthRequest;
 import com.infoacademy.infoacademy.domaine.entities.Student;
 import com.infoacademy.infoacademy.domaine.mappers.AuthMapper;
 import com.infoacademy.infoacademy.services.AuthService;
