@@ -1,7 +1,7 @@
 package com.infoacademy.infoacademy.controllers;
 
-import com.infoacademy.infoacademy.domaine.dtos.offer.OfferResponse;
 import com.infoacademy.infoacademy.domaine.entities.Offer;
+import com.infoacademy.infoacademy.domaine.entities.dtos.offer.OfferResponse;
 import com.infoacademy.infoacademy.domaine.mappers.OfferMapper;
 import com.infoacademy.infoacademy.services.OfferService;
 import lombok.RequiredArgsConstructor;

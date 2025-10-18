@@ -8,10 +8,4 @@ import java.util.Set;
 import java.util.UUID;
 
 public interface GroupRepository extends JpaRepository<Group, UUID> {
-
-    @Query("SELECT g.courses FROM Group g WHERE g.id = :idGroup AND g.offer.idOffer = :idOffer")
-    Set<Course> findCoursesByGroupAndOffer(
-            @Param("idGroup") UUID idGroup,
-            @Param("idOffer") Long idOffer
-    );
 }

@@ -1,4 +1,4 @@
-package com.infoacademy.infoacademy.domaine.dtos.offer;
+package com.infoacademy.infoacademy.domaine.entities.dtos.offer;
 
 import com.infoacademy.infoacademy.domaine.entities.Group;
 import com.infoacademy.infoacademy.domaine.entities.Student;

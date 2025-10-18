@@ -1,4 +1,4 @@
-package com.infoacademy.infoacademy.domaine.dtos;
+package com.infoacademy.infoacademy.domaine.entities.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -3,8 +3,8 @@ package com.infoacademy.infoacademy.services;
 import java.util.Set;
 import java.util.UUID;
 
-import com.infoacademy.infoacademy.domaine.dtos.CourseResponse;
+import com.infoacademy.infoacademy.domaine.entities.Course;
 
 public interface GroupService {
-    Set<CourseResponse> getCoursesForGroupInOffer(UUID idGroup, Long idOffer);
+    Set<Course> getCoursesByGroup(UUID idGroup);
 }
