@@ -5,6 +5,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import com.infoacademy.infoacademy.domaine.entities.enums.Difficulty;
 
@@ -17,8 +18,8 @@ import com.infoacademy.infoacademy.domaine.entities.enums.Difficulty;
 public class ExercisesSerie {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idSerie;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String title;
 

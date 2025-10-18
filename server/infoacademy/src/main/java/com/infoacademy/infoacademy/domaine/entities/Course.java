@@ -5,6 +5,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import com.infoacademy.infoacademy.domaine.entities.enums.CourseStatus;
 
@@ -17,8 +18,8 @@ import com.infoacademy.infoacademy.domaine.entities.enums.CourseStatus;
 public class Course {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idCourse;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(nullable = false)
     private String title;

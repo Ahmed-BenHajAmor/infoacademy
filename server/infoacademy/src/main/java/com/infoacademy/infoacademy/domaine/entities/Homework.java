@@ -5,6 +5,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "homeworks")
@@ -15,8 +16,8 @@ import java.util.Set;
 public class Homework {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idHomework;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String title;
 

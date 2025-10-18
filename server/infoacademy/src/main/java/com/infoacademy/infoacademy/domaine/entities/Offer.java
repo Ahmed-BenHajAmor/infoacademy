@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "offers")
@@ -16,8 +17,8 @@ import java.util.Set;
 public class Offer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idOffer;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String title;
 
@@ -25,9 +26,7 @@ public class Offer {
     private String description;
 
     private BigDecimal price;
-    private int durationDays;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+
     private boolean isActive;
 
 
