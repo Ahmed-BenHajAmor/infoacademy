@@ -19,8 +19,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID idUser;
 
-    @Column(nullable = false, unique = true, length = 50)
-    private String username;
+    @Column(nullable = false, length = 50)
+    private String firstname;
+
+    @Column(nullable = false, length = 50)
+    private String lastname;
 
     @Column(nullable = false, unique = true, length = 100)
     private String email;
@@ -39,6 +42,7 @@ public class User {
     public void onCreate(){
         dateCreated = LocalDateTime.now();
     }
+
 
 
 }
