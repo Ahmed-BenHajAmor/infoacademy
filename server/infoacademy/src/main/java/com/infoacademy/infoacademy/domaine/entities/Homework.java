@@ -26,7 +26,12 @@ public class Homework {
 
     private LocalDateTime dueDate;
     private String fileUrl;
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    public void onCreate(){
+        createdAt = LocalDateTime.now();
+    }
 
     @ManyToOne
     @JoinColumn(name = "id_professor")
