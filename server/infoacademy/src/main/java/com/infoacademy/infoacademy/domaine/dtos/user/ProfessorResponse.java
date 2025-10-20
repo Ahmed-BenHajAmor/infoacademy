@@ -1,4 +1,4 @@
-package com.infoacademy.infoacademy.domaine.dtos.auth;
+package com.infoacademy.infoacademy.domaine.dtos.user;
 
 
 import lombok.AllArgsConstructor;

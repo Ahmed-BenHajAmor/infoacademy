@@ -1,9 +1,9 @@
 package com.infoacademy.infoacademy.domaine.mappers;
 
 
-import com.infoacademy.infoacademy.domaine.dtos.auth.StudentRegisterRequest;
 import com.infoacademy.infoacademy.domaine.entities.Student;
 import com.infoacademy.infoacademy.domaine.entities.User;
+import com.infoacademy.infoacademy.domaine.dtos.auth.StudentRegisterRequest;
 import com.infoacademy.infoacademy.domaine.entities.enums.Role;
 
 import org.mapstruct.Mapper;

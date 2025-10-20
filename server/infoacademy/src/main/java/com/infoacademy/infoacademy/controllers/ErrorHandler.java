@@ -1,6 +1,5 @@
 package com.infoacademy.infoacademy.controllers;
 
-import com.infoacademy.infoacademy.domaine.dtos.Error.ErrorResponse;
 import jakarta.persistence.EntityExistsException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -9,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.infoacademy.infoacademy.domaine.dtos.Error.ErrorResponse;
 
 @RestController
 @ControllerAdvice

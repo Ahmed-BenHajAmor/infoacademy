@@ -1,30 +1,26 @@
-package com.infoacademy.infoacademy.domaine.dtos.auth;
-
+package com.infoacademy.infoacademy.domaine.dtos.user;
 
 import com.infoacademy.infoacademy.domaine.entities.enums.Level;
 import com.infoacademy.infoacademy.domaine.entities.enums.Section;
-import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserResponse {
+public class StudentResponse extends UserResponse {
+    private Level level;
 
-    private UUID id;
+    private Section section;
 
-    private String firstname;
+    private String school;
 
-    private String lastname;
+    private LocalDate dateOfBirth;
 
-    private String email;
-
-
+    private String profilePicture;
 }

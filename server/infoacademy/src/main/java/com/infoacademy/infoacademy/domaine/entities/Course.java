@@ -3,6 +3,7 @@ package com.infoacademy.infoacademy.domaine.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -27,14 +28,22 @@ public class Course {
     @Lob
     private String description;
 
-    private String category;
-    private String level;
-    private String language;
     private int duration;
     private String thumbnailUrl;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void onCreate(){
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void onUpdate(){
+        updatedAt = LocalDateTime.now();
+    }
 
     @Enumerated(EnumType.STRING)
     private CourseStatus status;
