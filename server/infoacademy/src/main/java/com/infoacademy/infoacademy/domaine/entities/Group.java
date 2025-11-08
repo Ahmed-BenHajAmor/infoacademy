@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -47,5 +48,22 @@ public class Group {
 
     @ManyToMany(mappedBy = "groups", fetch = FetchType.LAZY)
     private Set<ExercisesSerie> exercisesSeries = new HashSet<>();
+
+    @ManyToMany(mappedBy = "groups", fetch = FetchType.LAZY)
+    private Set<Professor> professors = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Group group = (Group) o;
+        return Objects.equals(id, group.id);
+    }
+
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
 }

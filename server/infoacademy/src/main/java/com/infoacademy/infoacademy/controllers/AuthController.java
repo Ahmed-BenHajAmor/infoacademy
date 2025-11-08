@@ -2,6 +2,7 @@ package com.infoacademy.infoacademy.controllers;
 
 import com.infoacademy.infoacademy.domaine.dtos.auth.*;
 
+import com.infoacademy.infoacademy.domaine.entities.Professor;
 import com.infoacademy.infoacademy.domaine.entities.Student;
 import com.infoacademy.infoacademy.domaine.mappers.AuthMapper;
 import com.infoacademy.infoacademy.services.AuthService;
@@ -23,11 +24,18 @@ public class AuthController {
     private final AuthMapper mapper;
     private final AuthService service;
 
-    @PostMapping("/register")
+    @PostMapping("/register/student")
     public ResponseEntity<Void> studentRegister(@Valid @RequestBody StudentRegisterRequest studentRegisterRequest) {
         Student newStudent = mapper.toStudentEntity(studentRegisterRequest);
         service.studentRegister(newStudent);
-        return ResponseEntity.status(HttpStatus.FOUND).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("/register/professor")
+    public ResponseEntity<Void> professorRegister(@Valid @RequestBody ProfessorRegisterRequest professorRegisterRequest) {
+        Professor newProfessor = mapper.toProfessorEntity(professorRegisterRequest);
+        service.professorRegister(newProfessor);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping

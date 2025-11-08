@@ -3,10 +3,7 @@ package com.infoacademy.infoacademy.domaine.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import com.infoacademy.infoacademy.domaine.entities.enums.CourseStatus;
 
@@ -29,7 +26,9 @@ public class Course {
     private String description;
 
     private int duration;
-    private String thumbnailUrl;
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")  // Use BLOB for binary data
+    private byte[] thumbnail;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -84,4 +83,18 @@ public class Course {
             inverseJoinColumns = @JoinColumn(name = "id_homework", nullable = false)
     )
     private Set<Homework> homeworks = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return Objects.equals(id, course.id);
+    }
+
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

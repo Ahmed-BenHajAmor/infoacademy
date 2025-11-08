@@ -3,9 +3,7 @@ package com.infoacademy.infoacademy.domaine.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "homeworks")
@@ -24,7 +22,9 @@ public class Homework {
     @Lob
     private String description;
 
-    private LocalDateTime dueDate;
+    @Column(nullable = false)
+    private LocalDateTime deadline;
+
     private String fileUrl;
     private LocalDateTime createdAt;
 
@@ -37,12 +37,16 @@ public class Homework {
     @JoinColumn(name = "id_professor")
     private Professor professor;
 
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")  // Use BLOB for binary data
+    private byte[] thumbnail;
+
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "homeworks")
-    private Set<Course> courses = new HashSet<>();
+    private List<Course> courses = new ArrayList<>();
 
 
-    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "homeworksSubmitted")
-    private Set<Student> studentsSubmitted;
+    @OneToMany(mappedBy = "homework", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<HomeworkSubmission> submissions = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -51,4 +55,18 @@ public class Homework {
             inverseJoinColumns = @JoinColumn(name = "id_group", nullable = false)
     )
     private Set<Group> groups = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Homework homework = (Homework) o;
+        return Objects.equals(id, homework.id);
+    }
+
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

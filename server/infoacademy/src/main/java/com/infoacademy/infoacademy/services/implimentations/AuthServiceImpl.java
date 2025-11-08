@@ -1,9 +1,12 @@
 package com.infoacademy.infoacademy.services.implimentations;
 
+import com.infoacademy.infoacademy.domaine.entities.Professor;
 import com.infoacademy.infoacademy.domaine.entities.Student;
+import com.infoacademy.infoacademy.repositories.ProfessorRepository;
 import com.infoacademy.infoacademy.repositories.StudentRepository;
-import com.infoacademy.infoacademy.security.InfoAcademyUserDetailsService;
 import com.infoacademy.infoacademy.services.AuthService;
+
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -26,12 +29,13 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
     private final StudentRepository studentRepository;
+    private final ProfessorRepository professorRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
 
-    @Value("ahmed-a-a-a-d-dddjkhdkjqhdqs")
-    private final String secret;
+    @Value("ahmed-ben-haj-amoraddsdqdsdqdqdqdqdqsdqd")
+    private String secretKey;
 
     @Override
     public void studentRegister(Student student) {
@@ -41,7 +45,14 @@ public class AuthServiceImpl implements AuthService {
         student.getUser().setPassword(passwordEncoder.encode(student.getUser().getPassword()));
         studentRepository.save(student);
     }
-
+    @Override
+    public void professorRegister(Professor professor) {
+        if(professorRepository.existsByUserEmail(professor.getUser().getEmail())){
+            throw new EntityExistsException("Registration Failed !!");
+        }
+        professor.getUser().setPassword(passwordEncoder.encode(professor.getUser().getPassword()));
+        professorRepository.save(professor);
+    }
     @Override
     public UserDetails authenticate(String email, String password) {
          authenticationManager.authenticate(
@@ -53,17 +64,30 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String generateToken(UserDetails userDetails) {
-        Map<String, Object> claims = new HashMap();
+        Map<String, Object> claims = new HashMap<>();
         return Jwts.builder()
-                .signWith(this.getSignKey(), SignatureAlgorithm.ES256)
-                .claims(claims)
+                .setClaims(claims)
                 .setSubject(userDetails.getUsername())
-                .setExpiration(new Date(System.currentTimeMillis() + 5 * 60 * 1000))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 1000)) // 5 minutes
+                .signWith(this.getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
+    @Override
+    public UserDetails verifyToken(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(this.getSignKey()) // same signing key
+                .build()
+                .parseClaimsJws(token)
+                .getBody(); // instead of getPayload()
+        return userDetailsService.loadUserByUsername(claims.getSubject());
+    }
+
+
+
     private Key getSignKey(){
-        return Keys.hmacShaKeyFor(secret.getBytes());
+        byte[] byteSecretKey = secretKey.getBytes();
+        return Keys.hmacShaKeyFor(byteSecretKey);
     }
 }

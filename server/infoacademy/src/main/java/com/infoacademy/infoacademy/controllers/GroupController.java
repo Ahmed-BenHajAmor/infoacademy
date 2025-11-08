@@ -7,18 +7,17 @@ import com.infoacademy.infoacademy.domaine.mappers.CourseMapper;
 import com.infoacademy.infoacademy.domaine.mappers.HomeworkMapper;
 import com.infoacademy.infoacademy.domaine.mappers.VideoMapper;
 import com.infoacademy.infoacademy.services.GroupService;
+import com.infoacademy.infoacademy.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.apache.coyote.BadRequestException;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 @RequestMapping("/api/v1/groups")
 public class GroupController {
 
@@ -26,11 +25,15 @@ public class GroupController {
     private final CourseMapper courseMapper;
     private final VideoMapper videoMapper;
     private final HomeworkMapper homeworkMapper;
+    private final UserService userService;
 
     @GetMapping("/{idGroup}/courses")
     public Set<CourseResponse> getGroupCourses(
-            @RequestParam UUID idGroup
-    ) {
+            @PathVariable UUID idGroup,
+            @RequestAttribute("id_user") UUID idLoggedInUser
+    ) throws BadRequestException {
+        if(userService.isUserInGroup(idLoggedInUser, idGroup))
+            throw new BadRequestException("You don't have access to group with id"+idGroup.toString());
         return service.getGroupCourses(idGroup).stream()
                 .map(courseMapper::toDto)
                 .collect(Collectors.toSet());
@@ -38,8 +41,11 @@ public class GroupController {
 
     @GetMapping("/{idGroup}/videos")
     public Set<VideoResponse> getGroupVideos(
-            @RequestParam UUID idGroup
-    ) {
+            @PathVariable UUID idGroup,
+            @RequestAttribute("id_user") UUID idLoggedInUser
+    ) throws BadRequestException {
+        if(userService.isUserInGroup(idLoggedInUser, idGroup))
+            throw new BadRequestException("You don't have access to group with id"+idGroup.toString());
         return service.getGroupVideos(idGroup).stream()
                 .map(videoMapper::toDto)
                 .collect(Collectors.toSet());
@@ -47,10 +53,15 @@ public class GroupController {
 
     @GetMapping("/{idGroup}/homeworks")
     public Set<HomeworkResponse> getGroupHomeworks(
-            @RequestParam UUID idGroup
-    ) {
+            @PathVariable UUID idGroup,
+            @RequestAttribute("id_user") UUID idLoggedInUser
+    ) throws BadRequestException {
+        if(userService.isUserInGroup(idLoggedInUser, idGroup))
+            throw new BadRequestException("You don't have access to group with id"+idGroup.toString());
         return service.getGroupHomeworks(idGroup).stream()
                 .map(homeworkMapper::toDto)
                 .collect(Collectors.toSet());
     }
+
+
 }

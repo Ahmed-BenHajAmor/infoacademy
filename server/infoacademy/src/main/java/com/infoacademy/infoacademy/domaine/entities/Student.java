@@ -21,7 +21,7 @@ public class Student {
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = "id_user")
+    @JoinColumn(name = "id")
     private User user;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -49,13 +49,8 @@ public class Student {
     )
     private Set<Session> sessionsAttended = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "homework_student",
-            joinColumns = @JoinColumn(name = "id_student", nullable = false),
-            inverseJoinColumns =  @JoinColumn(name = "id_homework", nullable = false)
-    )
-    private Set<Homework> homeworksSubmitted = new HashSet<>();
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<HomeworkSubmission> homeworkSubmissions = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

@@ -10,5 +10,5 @@ import java.util.UUID;
 @Repository
 public interface OfferRepository extends JpaRepository<Offer, UUID> {
     Set<Offer> findByIsActive(boolean status);
-
+    boolean existsByTitle(String title);
 }

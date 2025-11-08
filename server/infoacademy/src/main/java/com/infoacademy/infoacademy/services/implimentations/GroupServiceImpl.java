@@ -9,11 +9,13 @@ import com.infoacademy.infoacademy.services.GroupService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 import java.util.UUID;
 
 
+@Service
 @RequiredArgsConstructor
 public class GroupServiceImpl implements GroupService {
 
@@ -36,5 +38,10 @@ public class GroupServiceImpl implements GroupService {
     public Set<Homework> getGroupHomeworks(UUID idGroup) {
         Group group = groupRepository.findById(idGroup).orElseThrow(()->new EntityNotFoundException("No course Found !!"));
         return group.getHomeworks();
+    }
+
+    @Override
+    public Group getGroupById(UUID idGroup) {
+        return groupRepository.findById(idGroup).orElseThrow(()-> new EntityNotFoundException("group do not exist !!"));
     }
 }

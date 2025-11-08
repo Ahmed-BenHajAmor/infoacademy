@@ -5,6 +5,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -29,6 +30,12 @@ public class Offer {
 
     private boolean isActive;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            nullable = false,
+            name = "id_creator"
+    )
+    private Professor creator;
 
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "offers")
@@ -38,4 +45,18 @@ public class Offer {
 
     @OneToMany(mappedBy = "offer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Group> groups = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Offer offer = (Offer) o;
+        return Objects.equals(id, offer.id);
+    }
+
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
