@@ -8,5 +8,4 @@ import java.util.UUID;
 
 public interface UserService {
     User getUserById(UUID idUser);
-    boolean isUserInGroup(UUID idUser, UUID idGroup);
 }

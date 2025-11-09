@@ -7,6 +7,7 @@ import com.infoacademy.infoacademy.domaine.mappers.CourseMapper;
 import com.infoacademy.infoacademy.domaine.mappers.HomeworkMapper;
 import com.infoacademy.infoacademy.domaine.mappers.VideoMapper;
 import com.infoacademy.infoacademy.services.GroupService;
+import com.infoacademy.infoacademy.services.StudentService;
 import com.infoacademy.infoacademy.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
@@ -25,14 +26,14 @@ public class GroupController {
     private final CourseMapper courseMapper;
     private final VideoMapper videoMapper;
     private final HomeworkMapper homeworkMapper;
-    private final UserService userService;
+    private final StudentService studentService;
 
     @GetMapping("/{idGroup}/courses")
     public Set<CourseResponse> getGroupCourses(
             @PathVariable UUID idGroup,
             @RequestAttribute("id_user") UUID idLoggedInUser
     ) throws BadRequestException {
-        if(userService.isUserInGroup(idLoggedInUser, idGroup))
+        if(studentService.isStudentInGroup(idLoggedInUser, idGroup))
             throw new BadRequestException("You don't have access to group with id"+idGroup.toString());
         return service.getGroupCourses(idGroup).stream()
                 .map(courseMapper::toDto)
@@ -44,7 +45,7 @@ public class GroupController {
             @PathVariable UUID idGroup,
             @RequestAttribute("id_user") UUID idLoggedInUser
     ) throws BadRequestException {
-        if(userService.isUserInGroup(idLoggedInUser, idGroup))
+        if(studentService.isStudentInGroup(idLoggedInUser, idGroup))
             throw new BadRequestException("You don't have access to group with id"+idGroup.toString());
         return service.getGroupVideos(idGroup).stream()
                 .map(videoMapper::toDto)
@@ -56,7 +57,7 @@ public class GroupController {
             @PathVariable UUID idGroup,
             @RequestAttribute("id_user") UUID idLoggedInUser
     ) throws BadRequestException {
-        if(userService.isUserInGroup(idLoggedInUser, idGroup))
+        if(studentService.isStudentInGroup(idLoggedInUser, idGroup))
             throw new BadRequestException("You don't have access to group with id"+idGroup.toString());
         return service.getGroupHomeworks(idGroup).stream()
                 .map(homeworkMapper::toDto)

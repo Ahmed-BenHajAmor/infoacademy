@@ -22,4 +22,5 @@ public class CourseResponse {
     private byte[] thumbnail;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
 }

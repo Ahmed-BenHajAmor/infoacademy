@@ -5,9 +5,8 @@ import com.infoacademy.infoacademy.domaine.entities.Student;
 import com.infoacademy.infoacademy.domaine.entities.User;
 import com.infoacademy.infoacademy.domaine.entities.enums.Role;
 import com.infoacademy.infoacademy.repositories.StudentRepository;
-import com.infoacademy.infoacademy.repositories.UserRepository;
 import com.infoacademy.infoacademy.services.GroupService;
-import com.infoacademy.infoacademy.services.UserService;
+import com.infoacademy.infoacademy.services.StudentService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,16 +17,20 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
-
-    private final UserRepository userRepository;
-    private final StudentRepository studentRepository;
+public class StudentServiceImpl implements StudentService {
+    private final StudentRepository repo;
     private final GroupService groupService;
 
     @Override
-    public User getUserById(UUID idUser) {
-        return userRepository.findById(idUser).orElseThrow(()-> new EntityNotFoundException("user do not exist !!"));
+    public Student getStudentById(UUID idStudent) {
+        return repo.findById(idStudent).orElseThrow(()-> new EntityNotFoundException("student do not exist !!"));
     }
 
-
+    @Override
+    @Transactional
+    public boolean isStudentInGroup(UUID idStudent, UUID idGroup) {
+        Student student = this.getStudentById(idStudent);
+        Group group = groupService.getGroupById(idGroup);
+        return !student.getGroups().contains(group);
+    }
 }

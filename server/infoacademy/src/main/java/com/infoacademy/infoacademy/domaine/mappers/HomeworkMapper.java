@@ -2,6 +2,7 @@ package com.infoacademy.infoacademy.domaine.mappers;
 
 import com.infoacademy.infoacademy.domaine.dtos.course.CourseResponse;
 import com.infoacademy.infoacademy.domaine.dtos.homework.HomeworkResponse;
+import com.infoacademy.infoacademy.domaine.dtos.homework.UploadHomeworkRequest;
 import com.infoacademy.infoacademy.domaine.entities.Course;
 import com.infoacademy.infoacademy.domaine.entities.Homework;
 import org.mapstruct.Mapper;
@@ -10,6 +11,7 @@ import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
+import java.util.UUID;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface HomeworkMapper {
@@ -30,4 +32,8 @@ public interface HomeworkMapper {
                     .build();
         }).toList();
     }
+
+    Homework toEntity(UploadHomeworkRequest uploadHomeworkRequest);
+
+
 }
